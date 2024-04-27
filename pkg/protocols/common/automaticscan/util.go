@@ -42,16 +42,18 @@ func LoadTemplatesWithTags(opts Options, templateDirs []string, tags []string, u
 	if err != nil {
 		return nil, err
 	}
+	var finalTemplates []*templates.Template
 
-	finalTemplates := opts.Store.LoadTemplatesWithTags(templateDirs, tags)
-	if len(finalTemplates) == 0 && !useIncludeID {
-		return nil, errors.New(fmt.Sprintf("could not find any templates with %s tag", strings.Join(tags, ",")))
+	if len(tags) > 0 {
+		finalTemplates = opts.Store.LoadTemplatesWithTags(templateDirs, tags)
 	}
 	if useIncludeID {
 		includeTemplates := opts.Store.Templates()
 		finalTemplates = append(finalTemplates, includeTemplates...)
 	}
-
+	if len(finalTemplates) == 0 {
+		return nil, errors.New(fmt.Sprintf("could not find any templates with %s tag", strings.Join(tags, ",")))
+	}
 	if !opts.ExecuterOpts.Options.DisableClustering {
 		// cluster and reduce requests
 		totalReqBeforeCluster := getRequestCount(finalTemplates) * int(opts.Target.Count())
