@@ -296,14 +296,14 @@ func (e *ClusterExecuter) Execute(ctx *scan.ScanContext) (bool, error) {
 		}
 	})
 	if err != nil && e.options.HostErrorsCache != nil {
-		e.options.HostErrorsCache.MarkFailed(ctx.Input.MetaInput.Input, err)
+		e.options.HostErrorsCache.MarkFailed(ctx.Input, err)
 	}
 	return results, err
 }
 
 // ExecuteWithResults executes the protocol requests and returns results instead of writing them.
 func (e *ClusterExecuter) ExecuteWithResults(ctx *scan.ScanContext) ([]*output.ResultEvent, error) {
-	scanCtx := scan.NewScanContext(ctx.Input)
+	scanCtx := scan.NewScanContext(ctx.Context(), ctx.Input)
 	dynamicValues := make(map[string]interface{})
 
 	inputItem := ctx.Input.Clone()
@@ -330,7 +330,7 @@ func (e *ClusterExecuter) ExecuteWithResults(ctx *scan.ScanContext) ([]*output.R
 	}
 
 	if err != nil && e.options.HostErrorsCache != nil {
-		e.options.HostErrorsCache.MarkFailed(ctx.Input.MetaInput.Input, err)
+		e.options.HostErrorsCache.MarkFailed(ctx.Input, err)
 	}
 	return scanCtx.GenerateResult(), err
 }
