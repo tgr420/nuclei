@@ -179,6 +179,7 @@ OUTPUT:
    -se, -sarif-export string     file to export results in SARIF format
    -je, -json-export string      file to export results in JSON format
    -jle, -jsonl-export string    file to export results in JSONL(ine) format
+   -rd, -redact string[]         redact given list of keys from query parameter, request header and body
 
 CONFIGURATIONS:
    -config string                        path to the nuclei configuration file
@@ -203,7 +204,6 @@ CONFIGURATIONS:
    -sml, -show-match-line                show match lines for file templates, works with extractors only
    -ztls                                 use ztls library with autofallback to standard one for tls13 [Deprecated] autofallback to ztls is enabled by default
    -sni string                           tls sni hostname to use (default: input domain name)
-   -dt, -dialer-timeout value            timeout for network requests.
    -dka, -dialer-keep-alive value        keep-alive duration for network requests.
    -lfa, -allow-local-file-access        allows file (payload) access anywhere on the system
    -lna, -restrict-local-network-access  blocks connections to the local / private network
@@ -212,7 +212,6 @@ CONFIGURATIONS:
    -sip, -source-ip string               source ip address to use for network scan
    -rsr, -response-size-read int         max response size to read in bytes
    -rss, -response-size-save int         max response size to read in bytes (default 1048576)
-   -rrt, -response-read-timeout value    response read timeout in seconds (default 5s)
    -reset                                reset removes all nuclei configuration and data files (including nuclei-templates)
    -tlsi, -tls-impersonate               enable experimental client hello (ja3) tls randomization
    -hae, -http-api-endpoint string       experimental http api endpoint
@@ -238,7 +237,7 @@ FUZZING:
 UNCOVER:
    -uc, -uncover                  enable uncover engine
    -uq, -uncover-query string[]   uncover search query
-   -ue, -uncover-engine string[]  uncover search engine (shodan,censys,fofa,shodan-idb,quake,hunter,zoomeye,netlas,criminalip,publicwww,hunterhow) (default shodan)
+   -ue, -uncover-engine string[]  uncover search engine (shodan,censys,fofa,shodan-idb,quake,hunter,zoomeye,netlas,criminalip,publicwww,hunterhow,google) (default shodan)
    -uf, -uncover-field string     uncover fields to return (ip,port,host) (default "ip:port")
    -ul, -uncover-limit int        uncover results to return (default 100)
    -ur, -uncover-ratelimit int    override ratelimit of engines with unknown ratelimit (default 60 req/min) (default 60)
@@ -311,9 +310,11 @@ STATISTICS:
    -mp, -metrics-port int    port to expose nuclei metrics on (default 9092)
 
 CLOUD:
-   -auth                  configure projectdiscovery cloud (pdcp) api key
-   -cup, -cloud-upload    upload scan results to pdcp dashboard
-   -sid, -scan-id string  upload scan results to given scan id
+   -auth                      configure projectdiscovery cloud (pdcp) api key (default true)
+   -tid, -team-id string      upload scan results to given team id (optional) (default "none")
+   -cup, -cloud-upload        upload scan results to pdcp dashboard
+   -sid, -scan-id string      upload scan results to existing scan id (optional)
+   -sname, -scan-name string  scan name to set (optional)
 
 AUTHENTICATION:
    -sf, -secret-file string[]  path to config file containing secrets for nuclei authenticated scan

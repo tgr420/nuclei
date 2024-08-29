@@ -1404,6 +1404,19 @@ Valid values:
 
 <div class="dd">
 
+<code>skip-secret-file</code>  <i>bool</i>
+
+</div>
+<div class="dt">
+
+SkipSecretFile skips the authentication or authorization configured in the secret file.
+
+</div>
+
+<hr />
+
+<div class="dd">
+
 <code>cookie-reuse</code>  <i>bool</i>
 
 </div>
@@ -4332,19 +4345,6 @@ Args contains the arguments to pass to the javascript code.
 <div class="dt">
 
 Code contains code to execute for the javascript request.
-
-</div>
-
-<hr />
-
-<div class="dd">
-
-<code>timeout</code>  <i>int</i>
-
-</div>
-<div class="dt">
-
-Timeout in seconds is optional timeout for each  javascript script execution (i.e init, pre-condition, code)
 
 </div>
 
