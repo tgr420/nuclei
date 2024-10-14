@@ -17,7 +17,7 @@ func getTemplateDirs(opts Options) ([]string, error) {
 	defaultTemplatesDirectories := []string{config.DefaultConfig.GetTemplateDir()}
 	// adding custom template path if available
 	if len(opts.ExecuterOpts.Options.Templates) > 0 {
-		defaultTemplatesDirectories = append(defaultTemplatesDirectories, opts.ExecuterOpts.Options.Templates...)
+		defaultTemplatesDirectories = opts.ExecuterOpts.Options.Templates
 	}
 	// Collect path for default directories we want to look for templates in
 	var allTemplates []string
